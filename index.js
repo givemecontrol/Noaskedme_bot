@@ -1,8 +1,10 @@
 const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
 
+dotenv.config ();  
+
 // Telegram's token
-const token = '5101674276:AAFvBHY-0Zp4SEQZBsDI_dPLNxKZ3K_i_cQ';
+const token = process.env.TOKEN;
 
 //OpenWeatherMap API key
 const appID = 'f6020732e36c6e0ed6bcb0ede59bae97';
@@ -10,7 +12,7 @@ const appID = 'f6020732e36c6e0ed6bcb0ede59bae97';
 // OpenWeatherMap endpoint for getting weather by city name
 const weatherEndpoint = (city) => (
   `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&&appid=${appID}`
-);
+); 
 
 // URL that provides icon according to the weather
 const weatherIcon = (icon) => `http://openweathermap.org/img/w/${icon}.png`;
@@ -62,15 +64,6 @@ const getWeather = (chatId, city) => {
     );
   });
 }
-bot.on('message', (msg) => {
-
-    var what = "idiot";
-    if (msg.text.includes(what)) {
-    bot.kickChatMember(msg.chat.id,  msg.from.id);
-    }
-    
-    });
-
 // Listener (handler) for telegram's /weather event
 bot.onText(/\/w/, (msg, match) => {
   const chatId = msg.chat.id;
